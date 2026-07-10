@@ -1,0 +1,30 @@
+/* Admission Dashboard CSS Module */
+
+.detailLayout {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .detailLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailMain {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.detailSidebar {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  height: fit-content;
+}

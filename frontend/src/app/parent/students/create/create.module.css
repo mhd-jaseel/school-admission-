@@ -1,0 +1,53 @@
+/* Simple & Professional Form Design */
+
+.container {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.formCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.formSectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 32px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.formSectionTitle:first-of-type {
+  margin-top: 0;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-top: 24px;
+}
+
+.submitBtn:hover {
+  opacity: 0.95;
+}
