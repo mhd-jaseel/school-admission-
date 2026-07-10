@@ -109,7 +109,8 @@ export default function AdmissionDashboard() {
     setAddingSlot(true);
     try {
       const token = localStorage.getItem('school_admission_token');
-      const res = await fetch('http://localhost:3001/api/exam-slots', {
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+      const res = await fetch(`${apiBase}/exam-slots`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
