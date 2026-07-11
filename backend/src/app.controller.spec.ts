@@ -18,7 +18,7 @@ describe('AppController', () => {
     it('should return health check status', () => {
       const response = appController.getHello();
       expect(response.status).toBe('ok');
-      expect(response.message).toBe('ABC School Admission API is running smoothly');
+      expect(response.message).toBe('ABC Academy API is running successfully 🚀');
     });
   });
 });
