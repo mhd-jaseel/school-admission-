@@ -21,7 +21,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
-  if (res.status === 401) {
+  if (res.status === 401 && endpoint !== '/auth/login') {
     clearToken();
     if (typeof window !== 'undefined') {
       window.location.href = '/login';
@@ -31,7 +31,10 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    throw new Error(data.message || 'An error occurred during request');
+    const errorMsg = Array.isArray(data.message)
+      ? data.message.join(', ')
+      : data.message;
+    throw new Error(errorMsg || 'An error occurred during request');
   }
   return data as T;
 }

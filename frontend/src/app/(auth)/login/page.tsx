@@ -66,6 +66,7 @@ export default function Login() {
       await login(email, password);
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
+      setPassword('');
       setSubmitting(false);
     }
   };
