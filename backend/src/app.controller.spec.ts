@@ -15,8 +15,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return health check status', () => {
+      const response = appController.getHello();
+      expect(response.status).toBe('ok');
+      expect(response.message).toBe('ABC School Admission API is running smoothly');
     });
   });
 });

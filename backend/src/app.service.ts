@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHello() {
+    return {
+      status: 'ok',
+      message: 'ABC School Admission API is running smoothly',
+      timestamp: new Date().toISOString(),
+    };
   }
 }
