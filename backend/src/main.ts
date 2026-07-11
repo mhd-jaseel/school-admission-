@@ -1,14 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 
 // Boots up the NestJS framework, registers global middlewares (CORS, prefix, pipes), and binds to the port.
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS so the Next.js frontend (running on port 3000) can securely make API queries.
+  const configService = app.get(ConfigService);
+  const allowedOriginsStr = configService.get<string>('ALLOWED_ORIGINS');
+  const allowedOrigins = allowedOriginsStr
+    ? allowedOriginsStr.split(',').map((o) => o.trim())
+    : ['http://localhost:3000', 'https://school-admission-sigma.vercel.app'];
+
+  // Enable CORS so the frontend can securely make API queries.
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
   });
 
