@@ -1,4 +1,9 @@
-import { Injectable, ConflictException, UnauthorizedException, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
@@ -26,7 +31,9 @@ export class AuthService implements OnModuleInit {
         role: Role.ADMISSION_TEAM,
         name: 'Admission Team Lead',
       });
-      console.log('Seeded default admission team member: admin@school.com / admin123');
+      console.log(
+        'Seeded default admission team member: admin@school.com / admin123',
+      );
     }
   }
 
@@ -44,7 +51,7 @@ export class AuthService implements OnModuleInit {
       name,
       role: Role.PARENT,
     });
-    
+
     return {
       message: 'Registration successful',
       userId: user._id,

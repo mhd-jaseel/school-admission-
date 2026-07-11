@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ExamSlot, ExamSlotDocument } from './schemas/exam-slot.schema';
@@ -20,9 +26,30 @@ export class ExamSlotsService implements OnModuleInit {
     const count = await this.slotModel.countDocuments();
     if (count === 0) {
       const defaultSlots = [
-        { date: '2026-07-15', time: '10:00 AM', isBooked: false, maxStudents: 10, bookedCount: 0, studentId: null },
-        { date: '2026-07-15', time: '02:00 PM', isBooked: false, maxStudents: 10, bookedCount: 0, studentId: null },
-        { date: '2026-07-16', time: '10:00 AM', isBooked: false, maxStudents: 10, bookedCount: 0, studentId: null },
+        {
+          date: '2026-07-15',
+          time: '10:00 AM',
+          isBooked: false,
+          maxStudents: 10,
+          bookedCount: 0,
+          studentId: null,
+        },
+        {
+          date: '2026-07-15',
+          time: '02:00 PM',
+          isBooked: false,
+          maxStudents: 10,
+          bookedCount: 0,
+          studentId: null,
+        },
+        {
+          date: '2026-07-16',
+          time: '10:00 AM',
+          isBooked: false,
+          maxStudents: 10,
+          bookedCount: 0,
+          studentId: null,
+        },
       ];
       await this.slotModel.insertMany(defaultSlots);
       console.log('Pre-seeded default exam slots successfully.');
@@ -37,7 +64,9 @@ export class ExamSlotsService implements OnModuleInit {
     // Check duplicate
     const existing = await this.slotModel.findOne({ date, time });
     if (existing) {
-      throw new BadRequestException('An exam slot already exists for this date and time');
+      throw new BadRequestException(
+        'An exam slot already exists for this date and time',
+      );
     }
 
     // Check date is not in the past
@@ -66,7 +95,11 @@ export class ExamSlotsService implements OnModuleInit {
   }
 
   // Links a student application to an exam slot and updates the status to 'Slot Booked'.
-  async bookSlot(slotId: string, userId: string, studentId: string): Promise<Student> {
+  async bookSlot(
+    slotId: string,
+    userId: string,
+    studentId: string,
+  ): Promise<Student> {
     const student = await this.studentModel.findById(studentId);
     if (!student) {
       throw new NotFoundException('Student application not found');
@@ -77,7 +110,9 @@ export class ExamSlotsService implements OnModuleInit {
     }
 
     if (student.status !== ApplicationStatus.PAID) {
-      throw new BadRequestException('Student application must be in "Registration Fee Paid" status to book a slot');
+      throw new BadRequestException(
+        'Student application must be in "Registration Fee Paid" status to book a slot',
+      );
     }
 
     const slot = await this.slotModel.findById(slotId);
@@ -86,7 +121,9 @@ export class ExamSlotsService implements OnModuleInit {
     }
 
     if (slot.bookedCount >= slot.maxStudents) {
-      throw new BadRequestException('Exam slot is full. Please select another slot.');
+      throw new BadRequestException(
+        'Exam slot is full. Please select another slot.',
+      );
     }
 
     // Increment booked count and mark full if capacity reached

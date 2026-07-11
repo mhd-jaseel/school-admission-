@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Student, StudentDocument } from './schemas/student.schema';
@@ -41,7 +46,9 @@ export class StudentsService {
     }
 
     if (student.status !== ApplicationStatus.CREATED) {
-      throw new BadRequestException('Cannot edit application details after registration fee has been paid');
+      throw new BadRequestException(
+        'Cannot edit application details after registration fee has been paid',
+      );
     }
 
     Object.assign(student, dto);
@@ -49,14 +56,22 @@ export class StudentsService {
   }
 
   // Fetches a single student application, checking permission based on user role.
-  async findOne(studentId: string, userId: string, userRole: string): Promise<Student> {
-    const student = await this.studentModel.findById(studentId).populate('examSlotId');
+  async findOne(
+    studentId: string,
+    userId: string,
+    userRole: string,
+  ): Promise<Student> {
+    const student = await this.studentModel
+      .findById(studentId)
+      .populate('examSlotId');
     if (!student) {
       throw new NotFoundException('Student application not found');
     }
 
     if (userRole === Role.PARENT && student.parentId.toString() !== userId) {
-      throw new ForbiddenException('You do not have access to this student application');
+      throw new ForbiddenException(
+        'You do not have access to this student application',
+      );
     }
 
     return student;
@@ -65,13 +80,22 @@ export class StudentsService {
   // Retrieves all student applications. Parents see only theirs, admission team sees all.
   async findAll(userId: string, userRole: string): Promise<Student[]> {
     if (userRole === Role.ADMISSION_TEAM) {
-      return this.studentModel.find().populate('examSlotId').sort({ createdAt: -1 });
+      return this.studentModel
+        .find()
+        .populate('examSlotId')
+        .sort({ createdAt: -1 });
     }
-    return this.studentModel.find({ parentId: userId as any }).populate('examSlotId').sort({ createdAt: -1 });
+    return this.studentModel
+      .find({ parentId: userId as any })
+      .populate('examSlotId')
+      .sort({ createdAt: -1 });
   }
 
   // Completes mock payment for registration fee and transitions status to Registration Fee Paid.
-  async payRegistrationFee(studentId: string, userId: string): Promise<Student> {
+  async payRegistrationFee(
+    studentId: string,
+    userId: string,
+  ): Promise<Student> {
     const student = await this.studentModel.findById(studentId);
     if (!student) {
       throw new NotFoundException('Student application not found');
@@ -82,7 +106,9 @@ export class StudentsService {
     }
 
     if (student.status !== ApplicationStatus.CREATED) {
-      throw new BadRequestException('Registration fee already paid or application has advanced');
+      throw new BadRequestException(
+        'Registration fee already paid or application has advanced',
+      );
     }
 
     student.status = ApplicationStatus.PAID;

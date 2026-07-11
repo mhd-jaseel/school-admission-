@@ -30,6 +30,7 @@ export class Student {
   parentPhone: string;
 
   @Prop({
+    type: String,
     required: true,
     enum: ApplicationStatus,
     default: ApplicationStatus.CREATED,
@@ -39,7 +40,11 @@ export class Student {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
   parentId: MongooseSchema.Types.ObjectId;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'ExamSlot', required: false })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'ExamSlot',
+    required: false,
+  })
   examSlotId?: MongooseSchema.Types.ObjectId;
 
   @Prop({ required: false, min: 0, max: 100 })

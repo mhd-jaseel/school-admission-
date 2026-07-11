@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Patch, Body, Param, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
@@ -28,7 +37,12 @@ export class StudentsController {
     @Request() req,
     @Body() updateStudentDto: UpdateStudentDto,
   ) {
-    return this.studentsService.update(id, req.user.sub, req.user.role, updateStudentDto);
+    return this.studentsService.update(
+      id,
+      req.user.sub,
+      req.user.role,
+      updateStudentDto,
+    );
   }
 
   // Gets detailed data of a specific student application.

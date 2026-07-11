@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Student, StudentDocument } from '../students/schemas/student.schema';
@@ -33,7 +37,9 @@ export class AdmissionsService {
       ApplicationStatus.ADMISSION_COMPLETED,
     ];
     if (!validStatuses.includes(student.status)) {
-      throw new BadRequestException('Exam score can only be updated after a slot is booked');
+      throw new BadRequestException(
+        'Exam score can only be updated after a slot is booked',
+      );
     }
 
     student.examScore = score;
@@ -55,7 +61,9 @@ export class AdmissionsService {
       ApplicationStatus.ADMISSION_COMPLETED,
     ];
     if (!validStatuses.includes(student.status)) {
-      throw new BadRequestException('Course can only be assigned after exam is completed');
+      throw new BadRequestException(
+        'Course can only be assigned after exam is completed',
+      );
     }
 
     student.assignedCourse = course;

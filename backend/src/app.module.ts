@@ -18,7 +18,9 @@ import { AdmissionsModule } from './admissions/admissions.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI') || 'mongodb://127.0.0.1:27017/school-admission',
+        uri:
+          configService.get<string>('MONGODB_URI') ||
+          'mongodb://127.0.0.1:27017/school-admission',
       }),
       inject: [ConfigService],
     }),

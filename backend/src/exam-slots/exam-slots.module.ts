@@ -8,7 +8,9 @@ import { StudentsModule } from '../students/students.module';
 // Assembles exam slot features, registering model schemas and controllers.
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: ExamSlot.name, schema: ExamSlotSchema }]),
+    MongooseModule.forFeature([
+      { name: ExamSlot.name, schema: ExamSlotSchema },
+    ]),
     StudentsModule,
   ],
   controllers: [ExamSlotsController],

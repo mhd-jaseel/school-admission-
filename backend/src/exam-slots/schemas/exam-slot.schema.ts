@@ -21,7 +21,12 @@ export class ExamSlot {
   @Prop({ required: true, default: 0 })
   bookedCount: number;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Student', required: false, default: null })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Student',
+    required: false,
+    default: null,
+  })
   studentId?: MongooseSchema.Types.ObjectId | null;
 }
 
