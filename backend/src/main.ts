@@ -19,8 +19,8 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Prefixes all URL routes with /api (e.g. /api/auth/login).
-  app.setGlobalPrefix('api');
+  // Prefixes all URL routes with /api (e.g. /api/auth/login), excluding the root path.
+  app.setGlobalPrefix('api', { exclude: ['/'] });
 
   // Enforces global request validation and auto-transforms input payloads based on class-validator decorators in DTOs.
   app.useGlobalPipes(
